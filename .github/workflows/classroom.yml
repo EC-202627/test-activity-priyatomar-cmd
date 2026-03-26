@@ -32,9 +32,29 @@ jobs:
         comparison-method: exact
         timeout: 10
         max-score: 10
+    - name: Test2
+      id: test2
+      uses: classroom-resources/autograding-io-grader@v1
+      with:
+        test-name: Test2
+        setup-command: ''
+        command: python3 test.py
+        input: |-
+          3
+          1000
+          2000
+          10000
+        expected-output: |-
+          No
+          Yes
+          It's too much
+        comparison-method: exact
+        timeout: 10
+        max-score: 10
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
         TEST_RESULTS: "${{steps.test.outputs.result}}"
+        TEST2_RESULTS: "${{steps.test2.outputs.result}}"
       with:
-        runners: test
+        runners: test,test2
